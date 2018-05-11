@@ -37,16 +37,19 @@ def get_continuous_chunks(text):
            
 
                  if person!='' and named_entity!='':
-                    named_entity= ''.join([person, ' ', named_entity])
+                    previous= ''.join([person, ' ', named_entity])
                     person=''
               
-         
-                 if named_entity not in continuous_chunk and named_entity!='':
+                if previous!='' and  i.label() == 'ORGANIZATION' :
+                    named_entity= ''.join([previous, ' ', named_entity])
+                
+                if named_entity not in continuous_chunk and named_entity!='':
                     continuous_chunk.append(named_entity)
                     named_entity=''
                     person=''
             else:
                 person =''
+                previous=''
 
     return continuous_chunk
 
